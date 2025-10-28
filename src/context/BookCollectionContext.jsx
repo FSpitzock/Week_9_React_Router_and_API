@@ -29,6 +29,17 @@ const sampleBooks = [
 
 // TODO: Students need to add these missing interfaces:
 // 
+// interface Book {
+//   id: string
+//   title: string
+//   authors: string[]
+//   description: string
+//   thumbnail: string
+//   status: BookStatus
+// }
+
+// type BookStatus = 'currentlyReading' | 'wantToRead' | 'haveRead'
+
 // interface BookCollectionState {
 //   books: Book[]
 //   isLoading: boolean
@@ -38,7 +49,7 @@ const sampleBooks = [
 //   wantToRead: Book[]
 //   haveRead: Book[]
 // }
-//
+
 // interface BookCollectionActions {
 //   addBook: (book: Book) => void
 //   removeBook: (bookId: string) => void
@@ -46,7 +57,7 @@ const sampleBooks = [
 //   searchBooks: (query: string) => Promise<void>
 //   clearSearch: () => void
 // }
-//
+
 // interface BookCollectionHelpers {
 //   getBookById: (id: string) => Book | undefined
 //   getBooksByStatus: (status: BookStatus) => Book[]

@@ -1,5 +1,9 @@
 import { useState } from 'react'
 import { useBookCollection } from '../context/BookCollectionContext'
+import BookCard from '../components/BookCard'
+
+
+
 
 function BookSearch({ onBookSelect }) {
   const [searchTerm, setSearchTerm] = useState('')
@@ -39,37 +43,17 @@ function BookSearch({ onBookSelect }) {
           <>
             <h3>Search Results</h3>
             <div className="books-grid">
-              {searchResults.map((book) => (
-                <div key={book.id} className="book-card">
-                  <img 
-                    src={book.imageLinks?.thumbnail || 'https://via.placeholder.com/128x192/cccccc/ffffff?text=No+Image'} 
-                    alt={book.title}
-                    className="book-cover"
-                  />
-                  <div className="book-info">
-                    <h4>{book.title}</h4>
-                    <p className="book-authors">
-                      {book.authors?.join(', ') || 'Unknown Author'}
-                    </p>
-                    <p className="book-year">{book.publishedDate}</p>
-                    <div className="book-actions">
-                      <button 
-                        onClick={() => onBookSelect(book)}
-                        className="btn-secondary"
-                      >
-                        View Details
-                      </button>
-                      <button 
-                        onClick={() => handleAddBook(book)}
-                        className="btn-primary"
-                      >
-                        Add to Collection
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+  {searchResults.map((book) => (
+    <BookCard 
+      key={book.id} 
+      book={book} 
+      onSelect={() => onBookSelect(book)}
+      onAdd={() => handleAddBook(book)}
+    />
+  ))}
+</div>
+
+
           </>
         )}
       </div>
