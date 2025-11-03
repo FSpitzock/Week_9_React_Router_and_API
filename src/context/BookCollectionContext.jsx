@@ -1,5 +1,5 @@
 import { createContext, useContext, useReducer, useEffect } from 'react'
-import { searchBooks as searchGoogleBooks } from '../services/googleBooksApi'
+import { searchBooks as searchGoogleBooks } from '../services/googleBooksApi.js'
 
 // Basic Book interface - students will expand this
 const sampleBooks = [
@@ -27,11 +27,12 @@ const sampleBooks = [
   }
 ]
 
+
 // TODO: Students need to add these missing interfaces:
 // 
 // interface Book {
-//   id: string
-//   title: string
+//    id: string
+//    title: string
 //   authors: string[]
 //   description: string
 //   thumbnail: string
@@ -65,16 +66,27 @@ const sampleBooks = [
 //   getReadingProgress: () => { completed: number; total: number }
 // }
 
-// Simplified context for starter version
-const BookCollectionContext = createContext()
+/**
+ * @typedef {Object} Book
+ * @property {string} id
+ * @property {string} title
+ * @property {string[]} authors
+ * @property {string} description
+ * @property {string} thumbnail
+ * @property {'currentlyReading'|'wantToRead'|'haveRead'} status
+ */
 
+
+// Simplified context for starter version
+
+const BookCollectionContext = createContext(null)
 // Simple reducer - students will expand this
 function bookCollectionReducer(state, action) {
   switch (action.type) {
     case 'ADD_BOOK':
       return {
         ...state,
-        books: [...state.books, { ...action.payload, status: 'want-to-read' }]
+        books: [...state.books, { ...action.payload, status: 'wantToRead' }]
       }
     case 'REMOVE_BOOK':
       return {
@@ -102,9 +114,15 @@ function bookCollectionReducer(state, action) {
 
 // Initial state
 const initialState = {
-  books: sampleBooks.map(book => ({ ...book, status: 'want-to-read' })),
-  searchResults: []
+  books: sampleBooks.map(book => ({ ...book, status: 'wantToRead' })),
+  searchResults: [],
+  isLoading: false,
+  error: null,
+  currentlyReading: [],
+  wantToRead: [],
+  haveRead: []
 }
+
 
 export function BookCollectionProvider({ children }) {
   const [state, dispatch] = useReducer(bookCollectionReducer, initialState)
@@ -133,7 +151,7 @@ export function BookCollectionProvider({ children }) {
       // Add status field to search results
       const booksWithStatus = result.items.map(book => ({
         ...book,
-        status: 'want-to-read'
+        status: 'wantToRead'
       }))
       
       dispatch({ type: 'SET_SEARCH_RESULTS', payload: booksWithStatus })
