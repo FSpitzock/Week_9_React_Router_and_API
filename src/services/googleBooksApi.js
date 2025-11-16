@@ -15,27 +15,37 @@ const API_KEY = import.meta.env.VITE_GOOGLE_BOOKS_API_KEY
  * STARTER: Basic Book Data Transformation
  * Students can enhance this to handle more fields and edge cases
  */
-function transformGoogleBookToBook(googleBook) {
-  const volumeInfo = googleBook.volumeInfo || {}
-  const imageLinks = volumeInfo.imageLinks || {}
-  
+function transformGoogleBookToBook(googleBook = {}) {
+  const volumeInfo = googleBook.volumeInfo || {};
+  const imageLinks = volumeInfo.imageLinks || {};
+
   return {
-    id: googleBook.id,
+    id: googleBook.id || crypto.randomUUID(),
     title: volumeInfo.title || 'Unknown Title',
     authors: volumeInfo.authors || ['Unknown Author'],
     description: volumeInfo.description || 'No description available',
     publishedDate: volumeInfo.publishedDate || 'Unknown',
     pageCount: volumeInfo.pageCount || 0,
+    categories: volumeInfo.categories || ['Uncategorized'],
+    publisher: volumeInfo.publisher || 'Unknown Publisher',
+    averageRating: volumeInfo.averageRating || 0,
+    previewLink: volumeInfo.previewLink || '',
     imageLinks: {
-      thumbnail: imageLinks.thumbnail || 'https://via.placeholder.com/128x192/cccccc/ffffff?text=No+Image'
-    }
+      thumbnail:
+        imageLinks.thumbnail ||
+        'https://via.placeholder.com/128x192/cccccc/ffffff?text=No+Image',
+     smallThumbnail:
+        imageLinks.smallThumbnail ||
+        'https://via.placeholder.com/64x96/cccccc/ffffff?text=No+Image'
+      },
+  };
+}
+
     // TODO: Students can add more fields like:
     // - categories
     // - publisher
     // - averageRating
     // - previewLink
-  }
-}
 
 /**
  * STARTER: Basic Search Function
