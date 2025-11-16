@@ -7,11 +7,8 @@ import CollectionPage from './pages/CollectionPage';
 import BookDetailsPage from './pages/BookDetailsPage';
 
 function App() {
-
-      {/* 
-      TODO: Replace the above conditional rendering with React Router setup: DONE
-      */}
-      <BrowserRouter>
+return(
+      <BrowserRouter >
         <Navigation />
         <main className="main-content">
           <Routes>
@@ -22,7 +19,7 @@ function App() {
           </Routes>
         </main>
       </BrowserRouter>
-      
+);
   
 }
 
