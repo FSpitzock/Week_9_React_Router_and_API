@@ -23,12 +23,15 @@ jobs:
         env:
           VITE_GOOGLE_BOOKS_API_KEY: ${{ secrets.VITE_GOOGLE_BOOKS_API_KEY }}
 
-      - name: Set up git user
+      - name: Set up Git identity
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Deploy
+      - name: Deploy to GitHub Pages
         env:
-            GH_TOKEN: ${{ secrets.GITHUB_TOKEN}}
-        run: npx gh-pages -d dist --repo https://github.com/${{ github.repository }}.git 
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          npx gh-pages -d dist \
+            --repo https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git \
+            --branch gh-pages
